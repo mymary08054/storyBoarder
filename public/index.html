@@ -21,6 +21,23 @@
 
 <body>
     <div id="app"></div>
+    <!-- /////////// Reactfire adventures /////////// -->
+
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBeR3gHwQWqXGa_bPDLjrt3xtwOVhyplYA",
+            authDomain: "storyboarder-f3844.firebaseapp.com",
+            databaseURL: "https://storyboarder-f3844.firebaseio.com",
+            projectId: "storyboarder-f3844",
+            storageBucket: "storyboarder-f3844.appspot.com",
+            messagingSenderId: "964038204070"
+        };
+        firebase.initializeApp(config);
+
+    </script>
+    <!-- ///////////JS Plumb shenanigans/////////// -->
     <script>
         jsPlumb.ready(function () {
             jsPlumb.connect({
