@@ -15,12 +15,24 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      textCards: [{text: "one"}, {text: "two"}, {text: "three"}]
+      textCards: [{ text: "one" }, { text: "two" }, { text: "three" }]
     }
-    console.log("MOUNTED", this.state.textCards)
   }
 
   componentDidMount() {
+  }
+
+  connect() {
+    // create own component?
+    jsPlumb.ready(function () {
+      jsPlumb.connect({
+        source: "item_left",
+        target: "item_right",
+        endpoint: "Rectangle"
+      });
+      jsPlumb.draggable(jsPlumb.getSelector(".drag-drop-canvas .item"));
+
+    });
   }
 
   render() {
@@ -30,19 +42,13 @@ class Main extends Component {
       marginLeft: "50px"
     }
 
-    const textAreaStyle = {
-      border: "none",
-      background: "transparent",
-      outline: 0,
-
-    }
-
     return (
       <div>
         {/* Create card Button */}
+
         {/* Create cards on state */}
         <div id="diagramContainer" className="drag-drop-canvas">
-          {this.state &&  console.log("DIAGRAM", this.state)}
+          {this.connect()}
           {
             this.state && this.state.textCards.map((textCard) => (
               <div id="item_left" key={textCard.text} className="item">
@@ -50,10 +56,9 @@ class Main extends Component {
               </div>
             ))
           }
-          {/* <div id="item_left" className="item">
-            <textarea rows="5" id="comment" className="textCard" ></textarea>
+          <div id="item_right" className="item">
+            <textarea rows="5" id="comment" className="textCard" >RIGHT</textarea>
           </div>
-          <div id="item_right" className="item" style={divStyle}></div> */}
         </div>
 
         <h1>BOILERMAKER</h1>
