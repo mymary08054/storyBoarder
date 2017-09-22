@@ -20,22 +20,23 @@ class Main extends Component {
     this.state = {
       textCards: [{ text: "one" }, { text: "two" }, { text: "three" }]
     }
-    this.mixins = [ReactFireMixin]
+    // this.mixins = [ReactFireMixin]
     this.ref = firebaseApp.database().ref("users").child("u1") ;
   }
 
   componentDidMount() {
-    this.ref.on('value', (snapshot) => {
-      this.setState({ textCards: snapshot.val().textCards} )
-          // console.log(this.state)
+    this.ref.on('value', (snapshot) => { //async!!
+      this.setState({ textCards: snapshot.val().textCards} ) //async !!!
+          console.log( "MY STATE", this.state)
+          this.connect();
     })
-    this.connect(); 
   }
 
   AddCard = () => {
-    const newTextCards = [...this.state.textCards, {text: "", id: this.state.textCards.length - 1}];
+    const newTextCards = [...this.state.textCards, {text: "", id: this.state.textCards.length}];
       this.setState({ textCards: newTextCards} )
       this.ref.update({"textCards" : newTextCards})
+      this.connect();
   }
 
   connect() {
@@ -48,7 +49,6 @@ class Main extends Component {
         endpoint: "Rectangle"
       });
       jsPlumb.draggable(jsPlumb.getSelector(".drag-drop-canvas .item"));
-
     });
   }
 
@@ -65,10 +65,9 @@ class Main extends Component {
         <button onClick={this.AddCard} type="button" className="btn">Add Card</button>
         {/* Create cards on state */}
         <div id="diagramContainer" className="drag-drop-canvas">
-          {this.connect()}
           {
-            this.state && this.state.textCards.map((textCard, i) => (
-              <div id="item_left" key={i} className="item">
+            this.state && this.state.textCards.map((textCard) => (
+              <div id="item_left" key={textCard.id} className="item">
                 <textarea rows="5" id="comment" className="textCard" >{textCard.text}</textarea>
               </div>
             ))
