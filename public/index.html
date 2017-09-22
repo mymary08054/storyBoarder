@@ -2,35 +2,36 @@
 <html>
 
 <head>
-  <meta charset='utf-8'>
-  <meta name='viewport' content='width=device-width initial-scale=1.0'>
-  <title>Boilermaker</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width initial-scale=1.0'>
+    <title>Boilermaker</title>
 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-  <link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
 
-  <!-- <link rel="stylesheet" href="../../css/jsplumbtoolkit-defaults.css"> -->
-  <script defer src="/bundle.js"></script>
+    <!-- <link rel="stylesheet" href="../../css/jsplumbtoolkit-defaults.css"> -->
+    <script defer src="/bundle.js"></script>
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jsPlumb/1.4.1/jquery.jsPlumb-1.4.1-all-min.js"></script> -->
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jsPlumb/1.4.1/jquery.jsPlumb-1.4.1-all-min.js"></script>
 
 </head>
 
 <body>
-  <div id="app"></div>
-      <script>
-        jsPlumb.ready(function() {
+    <div id="app"></div>
+    <script>
+        jsPlumb.ready(function () {
             jsPlumb.connect({
-                source:"item_left",
-                target:"item_right",
-                endpoint:"Rectangle"
+                source: "item_left",
+                target: "item_right",
+                endpoint: "Rectangle"
             });
+            jsPlumb.draggable(jsPlumb.getSelector(".drag-drop-canvas .item"));
+            jsPlumb.draggable("item_right");
         });
-    </script> 
+    </script>
 </body>
 
 </html>
