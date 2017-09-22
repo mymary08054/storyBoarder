@@ -13,17 +13,8 @@ import {logout} from '../store'
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
 
-  const divStyle = {
-    marginLeft : "50px"
-  }
-
   return (
     <div>
-<div id="diagramContainer">
-    <div id="item_left" className="item"></div>
-    <div id="item_right" className="item" style={divStyle}></div>
-</div>
-
       <h1>BOILERMAKER</h1>
       <nav>
         {
