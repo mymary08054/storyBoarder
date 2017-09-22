@@ -18,7 +18,8 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      textCards: [{ text: "one" }, { text: "two" }, { text: "three" }]
+      textCards: [],
+      connections: {} //adjacency list of connections
     }
     // this.mixins = [ReactFireMixin]
     this.ref = firebaseApp.database().ref("users").child("u1") ;
@@ -43,6 +44,7 @@ class Main extends Component {
     console.log("IM CONNECTING")
     // create own component?
     jsPlumb.ready(function () {
+      
       jsPlumb.connect({
         source: "item_left",
         target: "item_right",
@@ -67,7 +69,7 @@ class Main extends Component {
         <div id="diagramContainer" className="drag-drop-canvas">
           {
             this.state && this.state.textCards.map((textCard) => (
-              <div id="item_left" key={textCard.id} className="item">
+              <div id={`item_${textCard.id}`} key={textCard.id} className="item">
                 <textarea rows="5" id="comment" className="textCard" >{textCard.text}</textarea>
               </div>
             ))
