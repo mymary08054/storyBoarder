@@ -4,10 +4,24 @@
     border: 1px solid gray;
 }
 
-.item {
-    height:80px; width: 80px;
-    border: 1px solid blue;
-    float: left;
+// .item {
+//     height:80px; width: 80px;
+//     border: 1px solid blue;
+//     box-sizing: border-box;
+//     padding: 10px;
+//     position: absolute;
+//   }
+
+        .item {
+            position: absolute;
+            height:80px; width: 80px;
+            border: 1px solid blue;
+        }
+
+.textCard {
+    border: none;
+    background: transparent;
+    outline: 0;
 }
 
 
