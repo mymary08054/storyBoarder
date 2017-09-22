@@ -17,22 +17,30 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jsPlumb/1.4.1/jquery.jsPlumb-1.4.1-all-min.js"></script>
 
+    <!-- ReactFire -->
+    <script src="https://cdn.firebase.com/libs/reactfire/0.1.6/reactfire.min.js"></script>
+
 </head>
 
 <body>
     <div id="app"></div>
-     <script src="./jsplumb/cards.plumb.js"></script> 
+    <!-- /////////// Reactfire adventures /////////// -->
+
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
     <!-- <script>
-        jsPlumb.ready(function () {
-            // jsPlumb.connect({
-            //     source: "item_left",
-            //     target: "item_right",
-            //     endpoint: "Rectangle"
-            // });
-            jsPlumb.draggable(jsPlumb.getSelector(".drag-drop-canvas .item"));
-            // jsPlumb.draggable("item_right");
-        });
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBeR3gHwQWqXGa_bPDLjrt3xtwOVhyplYA",
+            authDomain: "storyboarder-f3844.firebaseapp.com",
+            databaseURL: "https://storyboarder-f3844.firebaseio.com",
+            projectId: "storyboarder-f3844",
+            storageBucket: "storyboarder-f3844.appspot.com",
+            messagingSenderId: "964038204070"
+        };
+        firebase.initializeApp(config);
     </script> -->
+    <!-- ///////////JS Plumb shenanigans/////////// -->
+    <script src="./jsplumb/cards.plumb.js"></script>
 </body>
 
 </html>

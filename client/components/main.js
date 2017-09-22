@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { ReactFireMixin } from 'reactfire'
+import  firebaseApp  from '../../fire'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
@@ -10,6 +12,7 @@ import { logout } from '../store'
  *  else common to our entire app. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
  */
+
 class Main extends Component {
 
   constructor(props) {
@@ -17,12 +20,26 @@ class Main extends Component {
     this.state = {
       textCards: [{ text: "one" }, { text: "two" }, { text: "three" }]
     }
+    this.mixins = [ReactFireMixin]
+    this.ref = firebaseApp.database().ref("users").child("u1") ;
   }
 
   componentDidMount() {
+    this.ref.on('value', (snapshot) => {
+      this.setState({ textCards: snapshot.val().textCards} )
+          // console.log(this.state)
+    })
+    this.connect(); 
+  }
+
+  AddCard = () => {
+    const newTextCards = [...this.state.textCards, {text: "", id: this.state.textCards.length - 1}];
+      this.setState({ textCards: newTextCards} )
+      this.ref.update({"textCards" : newTextCards})
   }
 
   connect() {
+    console.log("IM CONNECTING")
     // create own component?
     jsPlumb.ready(function () {
       jsPlumb.connect({
@@ -45,13 +62,13 @@ class Main extends Component {
     return (
       <div>
         {/* Create card Button */}
-        <button type="button" class="btn">Add Card</button>
+        <button onClick={this.AddCard} type="button" className="btn">Add Card</button>
         {/* Create cards on state */}
         <div id="diagramContainer" className="drag-drop-canvas">
           {this.connect()}
           {
-            this.state && this.state.textCards.map((textCard) => (
-              <div id="item_left" key={textCard.text} className="item">
+            this.state && this.state.textCards.map((textCard, i) => (
+              <div id="item_left" key={i} className="item">
                 <textarea rows="5" id="comment" className="textCard" >{textCard.text}</textarea>
               </div>
             ))
