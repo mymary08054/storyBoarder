@@ -28,7 +28,7 @@ const Main = (props) => {
     <div>
       <div id="diagramContainer" className="drag-drop-canvas">
         <div id="item_left" className="item">
-          {/* <textarea rows="5" id="comment" className="textCard" ></textarea> */}
+           <textarea rows="5" id="comment" className="textCard" ></textarea> 
         </div>
         <div id="item_right" className="item" style={divStyle}></div>
       </div>
