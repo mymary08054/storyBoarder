@@ -23,13 +23,13 @@
     <div id="app"></div>
     <script>
         jsPlumb.ready(function () {
-            jsPlumb.connect({
-                source: "item_left",
-                target: "item_right",
-                endpoint: "Rectangle"
-            });
+            // jsPlumb.connect({
+            //     source: "item_left",
+            //     target: "item_right",
+            //     endpoint: "Rectangle"
+            // });
             jsPlumb.draggable(jsPlumb.getSelector(".drag-drop-canvas .item"));
-            jsPlumb.draggable("item_right");
+            // jsPlumb.draggable("item_right");
         });
     </script>
 </body>
