@@ -45,7 +45,7 @@ class Main extends Component {
     return (
       <div>
         {/* Create card Button */}
-
+        <button type="button" class="btn">Add Card</button>
         {/* Create cards on state */}
         <div id="diagramContainer" className="drag-drop-canvas">
           {this.connect()}
