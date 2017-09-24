@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ReactFireMixin } from 'reactfire'
-import  firebaseApp  from '../../fire'
+import firebaseApp from '../../fire'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
@@ -21,23 +21,38 @@ class Main extends Component {
       textCards: [{ text: "one" }, { text: "two" }, { text: "three" }]
     }
     // this.mixins = [ReactFireMixin]
-    this.ref = firebaseApp.database().ref("users").child("u1") ;
+    this.ref = firebaseApp.database().ref("users").child("u1");
   }
 
   componentDidMount() {
     this.ref.on('value', (snapshot) => { //async!!
-      this.setState({ textCards: snapshot.val().textCards} ) //async !!!
-          console.log( "MY STATE", this.state)
-          this.connect();
+      this.setState({ textCards: snapshot.val().textCards }) //async !!!
+      console.log("MY STATE", this.state)
+      this.connect();
     })
   }
 
-  AddCard = () => {
-    const newTextCards = [...this.state.textCards, {text: "", id: this.state.textCards.length}];
-      this.setState({ textCards: newTextCards} )
-      this.ref.update({"textCards" : newTextCards})
-      this.connect();
+  AddCard = (evt) => {
+    evt.preventDefault();
+
+    const newTextCards = [...this.state.textCards, { text: "", id: this.state.textCards.length }];
+    this.setState({ textCards: newTextCards })
+    this.ref.update({ "textCards": newTextCards })
+    // this.connect();
   }
+
+  // handleSubmit (evt) {
+  //   evt.preventDefault();
+
+  //   const { name, newMessageEntry } = this.state;
+  //   const content = newMessageEntry;
+  //   const { channelId } = this.props;
+
+  //   store.dispatch(postMessage({ name, content, channelId }));
+  //   store.dispatch(writeMessage(''));
+  // }
+
+
 
   connect() {
     console.log("IM CONNECTING")
@@ -58,11 +73,29 @@ class Main extends Component {
     const divStyle = {
       marginLeft: "50px"
     }
-
+    console.log("RENDERING");
     return (
       <div>
         {/* Create card Button */}
-        <button onClick={this.AddCard} type="button" className="btn">Add Card</button>
+
+        <form id="new-message-form" onSubmit={this.AddCard}>
+          <div className="input-group input-group-lg">
+            <input
+              className="form-control"
+              type="text"
+              name="content"
+              value={this.state.newMessageEntry}
+              onChange={this.handleChange}
+              placeholder="Say something nice..."
+            />
+            <span className="input-group-btn">
+              <button type="submit" className="btn btn-default">Add Card</button>
+              {/* <button onClick={this.AddCard} type="button" className="btn">Add Card</button> */}
+              {/* <button className="btn btn-default" type="submit">Chat!</button> */}
+            </span>
+          </div>
+        </form>
+
         {/* Create cards on state */}
         <div id="diagramContainer" className="drag-drop-canvas">
           {
@@ -75,26 +108,8 @@ class Main extends Component {
           <div id="item_right" className="item">
             <textarea rows="5" id="comment" className="textCard" >RIGHT</textarea>
           </div>
+          {/* {this.connect()} */}
         </div>
-
-        <h1>BOILERMAKER</h1>
-        <nav>
-          {
-            isLoggedIn
-              ? <div>
-                {/* The navbar will show these links after you log in */}
-                <Link to='/home'>Home</Link>
-                <a href='#' onClick={handleClick}>Logout</a>
-              </div>
-              : <div>
-                {/* The navbar will show these links before you log in */}
-                <Link to='/login'>Login</Link>
-                <Link to='/signup'>Sign Up</Link>
-              </div>
-          }
-        </nav>
-        <hr />
-        {children}
       </div>
     )
   }

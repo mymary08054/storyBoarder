@@ -1,0 +1,12 @@
+{
+  "users": {
+    "u1" :{
+      "name": "user1",
+      "textCards": [{ "text": "one", "id": 0 }, { "text": "two", "id": 1 }]    
+    },
+    "u2" :{
+      "name": "user2",
+      "textCards": [{ "text": "a", "id": 0 }, { "text": "b", "id": 1 }, { "text": "c", "id": 2 }]    
+    }
+  } 
+}
