@@ -1,14 +1,18 @@
 #diagramContainer {
     padding: 20px;
-    width:80%; height: 200px;
+    height:100vh;
+    width: 100vw;
     border: 1px solid gray;
 }
 
 .item {
-    height:80px; width: 80px;
-    border: 1px solid blue;
+    height:150px; width: 150px;
+    // background-color: rgba(255, 255, 128, .5);
+    border-style: none;
+    border-radius: 8px;
+    // border: 1px solid blue;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 20px;
     position: absolute;
   }
 

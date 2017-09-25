@@ -2,7 +2,9 @@
   "users": {
     "u1" :{
       "name": "user1",
-      "textCards": [{ "text": "one", "id": 0 }, { "text": "two", "id": 1 }]    
+      "textCards": [
+        { "id": 0, "text": "one", "hex": "#ffff80" },
+        { "id": 1, "text": "two", "hex": "#80ff80"}]    
     },
     "u2" :{
       "name": "user2",

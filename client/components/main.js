@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logout } from '../store'
+import { SketchPicker } from 'react-color';
 
 /**
  * COMPONENT
@@ -18,6 +19,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentColor: "#fff",
       textCards: [],
       connections: {} //adjacency list of connections
     }
@@ -35,13 +37,82 @@ class Main extends Component {
 
   AddCard = (evt) => {
     evt.preventDefault();
-    const newTextCards = [...this.state.textCards, { text: "", id: this.state.textCards.length }];
+    const newTextCards = [...this.state.textCards, { id: this.state.textCards.length, text: "", hex: this.state.currentColor }];
     this.setState({ textCards: newTextCards })
     this.ref.update({ "textCards": newTextCards })
   }
 
+  addBgColorStyle = (rgb) => {
+    return { backgroundColor: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, .5)` }
+  }
+
+  handleChangeComplete = (color) => {
+    // console.log("COLOR", color.rg)
+    this.setState({ currentColor: color.hex });
+  };
+
+  render() {
+    const { children, handleClick, isLoggedIn } = this.props
+
+    return (
+      <div>
+        {/* Create card Button */}
+        <SketchPicker color={this.state.currentColor} onChangeComplete={this.handleChangeComplete} />
+        <form id="add-card-btn" onSubmit={this.AddCard}>
+          <div className="input-group input-group-lg">
+            <button type="submit" className="btn btn-default">Add Card</button>
+          </div>
+        </form>
+
+        {/* Create cards on state */}
+        <div id="diagramContainer" className="drag-drop-canvas">
+          {
+            this.state && this.state.textCards.map((textCard) => (
+              <div id={`item_${textCard.id}`} key={textCard.id} className="item"
+                style={this.addBgColorStyle(this.hexToRgb(textCard.hex))}>
+                <textarea rows="5" id="comment" className="textCard" >{textCard.text}</textarea>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    )
+  }
+
+  hexToRgb = (hex) => {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+
+  //debug: adding space to make cards easier to read
+  //returns obj with marginLeft
+  addSpacingStyle = (ind) => {
+    return { marginLeft: `${ind * 100}px` }
+  }
+
+  //TODO: need to find best place to place this, connect & this
+  // method are way too expensive rn
+  createAnchorStyle = (anchorDirection) => {
+    return {
+      /* Endpoint-Style */
+      endpoint: "Circle",
+      paintStyle: { fillStyle: card.hex, outlineColor: card.hex },
+      hoverPaintStyle: { fillStyle: card.hex },
+
+      /* Connector(Line)-Style */
+      connectorStyle: { strokeStyle: card.hex },
+      connectorHoverStyle: { lineWidth: 8 },
+      anchor: [anchorDirection]
+    }
+  }
+
+
   connect = (cards) => {
-    console.log("IM CONNECTING")
+    // console.log("IM CONNECTING")
     // create own component?
     jsPlumb.ready(function () {
       //TODO: not recognized as func?
@@ -51,25 +122,52 @@ class Main extends Component {
       var common = {
         isSource: true,
         isTarget: true,
-        connector: ["Straight"]
+        connector: ["Bezier"]
       };
 
       cards.forEach((card) => {
         const item_id = `item_${card.id}`;
         jsPlumb.addEndpoint(item_id, {
+          /* Endpoint-Style */
+          endpoint: "Rectangle",
+          paintStyle: { fillStyle: card.hex, outlineColor: card.hex },
+          hoverPaintStyle: { fillStyle: card.hex },
+
+          /* Connector(Line)-Style */
+          connectorStyle: { strokeStyle: card.hex },
+          connectorHoverStyle: { lineWidth: 8 },
           anchor: ["Right"]
         }, common);
         jsPlumb.addEndpoint(item_id, {
+          endpoint: "Rectangle",
+          paintStyle: { fillStyle: card.hex, outlineColor: card.hex },
+          hoverPaintStyle: { fillStyle: card.hex },
+          /* Connector(Line)-Style */
+          connectorStyle: { strokeStyle: card.hex },
+          connectorHoverStyle: { lineWidth: 8 },
           anchor: "Left"
         }, common);
         jsPlumb.addEndpoint(item_id, {
+          endpoint: "Rectangle",
+          paintStyle: { fillStyle: card.hex, outlineColor: card.hex },
+          hoverPaintStyle: { fillStyle: card.hex },
+          /* Connector(Line)-Style */
+          connectorStyle: { strokeStyle: card.hex },
+          connectorHoverStyle: { lineWidth: 8 },
           anchor: "Top"
         }, common);
         jsPlumb.addEndpoint(item_id, {
+          endpoint: "Rectangle",
+          paintStyle: { fillStyle: card.hex, outlineColor: card.hex },
+          hoverPaintStyle: { fillStyle: card.hex },
+          /* Connector(Line)-Style */
+          connectorStyle: { strokeStyle: card.hex },
+          connectorHoverStyle: { lineWidth: 8 },
+
           anchor: "Bottom"
         }, common);
 
-        $("#"+item_id).resizable({
+        $("#" + item_id).resizable({
           resize: function (event, ui) {
             jsPlumb.repaint(ui.helper);
           },
@@ -89,38 +187,6 @@ class Main extends Component {
     });
   }
 
-  //debug: adding space to make cards easier to read
-  //returns obj with marginLeft
-  addSpacingStyle = (ind) => {
-    return { marginLeft: `${ind * 100}px` }
-  }
-
-  render() {
-    const { children, handleClick, isLoggedIn } = this.props
-    return (
-      <div>
-        {/* Create card Button */}
-
-        <form id="add-card-btn" onSubmit={this.AddCard}>
-          <div className="input-group input-group-lg">
-            <button type="submit" className="btn btn-default">Add Card</button>
-          </div>
-        </form>
-
-        {/* Create cards on state */}
-        <div id="diagramContainer" className="drag-drop-canvas">
-          {
-            this.state && this.state.textCards.map((textCard) => (
-              <div id={`item_${textCard.id}`} key={textCard.id} className="item">
-                <textarea rows="5" id="comment" className="textCard" >{textCard.text}</textarea>
-              </div>
-            ))
-          }
-          {/* {this.connect()} */}
-        </div>
-      </div>
-    )
-  }
 }
 
 /**
