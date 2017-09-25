@@ -55,18 +55,26 @@ class Main extends Component {
       };
 
       cards.forEach((card) => {
-        jsPlumb.addEndpoint(`item_${card.id}`, {
+        const item_id = `item_${card.id}`;
+        jsPlumb.addEndpoint(item_id, {
           anchor: ["Right"]
         }, common);
-        jsPlumb.addEndpoint(`item_${card.id}`, {
+        jsPlumb.addEndpoint(item_id, {
           anchor: "Left"
         }, common);
-        jsPlumb.addEndpoint(`item_${card.id}`, {
+        jsPlumb.addEndpoint(item_id, {
           anchor: "Top"
         }, common);
-        jsPlumb.addEndpoint(`item_${card.id}`, {
+        jsPlumb.addEndpoint(item_id, {
           anchor: "Bottom"
         }, common);
+
+        $("#"+item_id).resizable({
+          resize: function (event, ui) {
+            jsPlumb.repaint(ui.helper);
+          },
+          handles: "all"
+        });
 
       })
 
@@ -89,14 +97,13 @@ class Main extends Component {
 
   render() {
     const { children, handleClick, isLoggedIn } = this.props
-    console.log("RENDERING");
     return (
       <div>
         {/* Create card Button */}
 
-        <form id="new-message-form" onSubmit={this.AddCard}>
+        <form id="add-card-btn" onSubmit={this.AddCard}>
           <div className="input-group input-group-lg">
-              <button type="submit" className="btn btn-default">Add Card</button>
+            <button type="submit" className="btn btn-default">Add Card</button>
           </div>
         </form>
 
@@ -109,9 +116,6 @@ class Main extends Component {
               </div>
             ))
           }
-          <div id="item_right" className="item">
-            <textarea rows="5" id="comment" className="textCard" >RIGHT</textarea>
-          </div>
           {/* {this.connect()} */}
         </div>
       </div>
