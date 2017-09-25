@@ -55,25 +55,28 @@ class Main extends Component {
     const { children, handleClick, isLoggedIn } = this.props
 
     return (
-      <div>
-        {/* Create card Button */}
-        <SketchPicker color={this.state.currentColor} onChangeComplete={this.handleChangeComplete} />
-        <form id="add-card-btn" onSubmit={this.AddCard}>
-          <div className="input-group input-group-lg">
-            <button type="submit" className="btn btn-default">Add Card</button>
-          </div>
-        </form>
-
-        {/* Create cards on state */}
-        <div id="diagramContainer" className="drag-drop-canvas">
-          {
-            this.state && this.state.textCards.map((textCard) => (
-              <div id={`item_${textCard.id}`} key={textCard.id} className="item"
-                style={this.addBgColorStyle(this.hexToRgb(textCard.hex))}>
-                <textarea rows="5" id="comment" className="textCard" >{textCard.text}</textarea>
-              </div>
-            ))
-          }
+      <div className="container">
+        <div className="row">
+          {/* <div className="col-md-3"> */}
+          {/* Create card Button */}
+          <SketchPicker color={this.state.currentColor} onChangeComplete={this.handleChangeComplete} />
+          <form id="add-card-btn" onSubmit={this.AddCard}>
+            <div className="input-group input-group-lg">
+              <button type="submit" className="btn btn-default">Add Card</button>
+            </div>
+          </form>
+          {/* </div> */}
+          {/* Create cards on state */}
+          {/* <div id="diagramContainer" className="drag-drop-canvas col-md-9"> */}
+            {
+              this.state && this.state.textCards.map((textCard) => (
+                <div id={`item_${textCard.id}`} key={textCard.id} className="item"
+                  style={this.addBgColorStyle(this.hexToRgb(textCard.hex))}>
+                  <textarea rows="5" id="comment" className="textCard" >{textCard.text}</textarea>
+                </div>
+              ))
+            }
+          {/* </div> */}
         </div>
       </div>
     )
